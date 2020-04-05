@@ -1,1 +1,39 @@
-<h1>hello</h1>
+<html>
+<head>
+    <title>Air Quality</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<script type = "text/javascript">
+    function start() {
+        const drop = document.getElementById('city');
+        const json = fetch("http://localhost:8080/api/stations")
+            .then((resp) => resp.json())
+            .then(function (data) {
+                for (id in data) {
+                    const aux = data[id];
+                    const city = aux["city"];
+                    const option = document.createElement('option');
+                    option.innerHTML = city;
+                    option.value = id;
+                    drop.appendChild(option);
+                }
+                ;
+            })
+    }
+</script>
+
+
+<body onload="start()">
+<div>
+    <h1>Air Quality App</h1>
+</div>
+<div>
+    <b>City: </b>
+    <select id="city"></select>
+    <button onclick="">OK</button>
+</div>
+</body>
+
+</html>

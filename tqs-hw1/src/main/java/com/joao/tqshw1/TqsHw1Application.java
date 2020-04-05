@@ -7,6 +7,10 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class TqsHw1Application {
 
@@ -19,8 +23,38 @@ public class TqsHw1Application {
 
     @Bean
     public CommandLineRunner run(RestTemplate restTemplate) {
-        //Falta implementar
-        return null;
+        /**
+         * A API utilizada não possui endpoint com todas as cidades
+        por isso optei por escolher algumas das possíveis
+         */
+        int ctr = 0;
+        ArrayList<String> city_names = new ArrayList<>();
+        city_names.add("Shanghai");
+        city_names.add("Paris");
+        city_names.add("London");
+        city_names.add("Lisbon");
+        city_names.add("Berlin");
+        city_names.add("Tokyo");
+        city_names.add("Munchen");
+        city_names.add("Denver");
+        city_names.add("Helsinki");
+        city_names.add("Stockholm");
+        city_names.add("Moscow");
+        city_names.add("Madrid");
+
+
+        ArrayList<Station> aux = new ArrayList<>();
+
+        while (ctr<city_names.size()){
+            Station st = new Station(ctr,city_names.get(ctr));
+            aux.add(st);
+            ctr+=1;
+        }
+        return args -> {
+            for(int i=0;i<aux.size();i++){
+                Cache.stations.put(aux.get(i).getID(),aux.get(i));
+            }
+        };
     }
 
 }

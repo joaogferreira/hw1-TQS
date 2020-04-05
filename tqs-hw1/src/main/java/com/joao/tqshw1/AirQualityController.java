@@ -31,8 +31,9 @@ public class AirQualityController {
     }
 
     @GetMapping("/stations")
-    public Map<String,Station> places(){
+    public Map<Integer,Station> stations(){
         return Cache.stations;
     }
+
 
 }

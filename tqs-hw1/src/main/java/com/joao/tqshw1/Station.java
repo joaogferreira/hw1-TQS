@@ -1,46 +1,17 @@
 package com.joao.tqshw1;
 
 public class Station {
-    private float lat;
-    private float lon;
-    private Long uid;
-    private Integer aqi;
+    private String city;
+    private int id;
 
-    protected float getLat() {
-        return lat;
-    }
+    public Station(int id, String city){ this.id = id; this.city = city; }
 
-    protected void setLat(float lat) {
-        this.lat = lat;
-    }
+    public String getCity(){ return city; }
+    public int getID() { return id; }
 
-    protected float getLon() {
-        return lon;
-    }
-
-    protected void setLon(float lon) {
-        this.lon = lon;
-    }
-
-    protected Long getUid() {
-        return uid;
-    }
-
-    protected void setUid(Long uid) {
-        this.uid = uid;
-    }
-
-    protected Integer getAqi() {
-        return aqi;
-    }
-
-    protected void setAqi(Integer aqi) {
-        this.aqi = aqi;
-    }
+    public void setCity(String new_city) { this.city = new_city; }
+    public void setID(int id){ this.id = id; }
 
     @Override
-    public String toString() {
-        return "Station [lat=" + lat + ", lon=" + lon + ", uid=" + uid
-                + ", aqi=" + aqi + "]";
-    }
+    public String toString() { return "Station{" + "city='" + city + '\'' +  '}'; }
 }

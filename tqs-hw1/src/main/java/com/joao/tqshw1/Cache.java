@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 
 public class Cache {
     protected static final Map<String,AirQuality> airQuality = new HashMap<>();
-    protected static final Map<String,Station> stations = new HashMap<>();
+    protected static final Map<Integer,Station> stations = new HashMap<>();
     private static int number_Requests = 0;
 
     public static void setAirQuality(String city,AirQuality airq){
