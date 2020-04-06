@@ -11,7 +11,7 @@ public class Cache {
     private static int number_Requests = 0;
 
     public static void setAirQuality(String city,AirQuality airq){
-        //air.setTime(System.currentTimeMillis());
+        airq.setTime(System.currentTimeMillis());
         airQuality.put(city, airq);
         number_Requests++;
     }

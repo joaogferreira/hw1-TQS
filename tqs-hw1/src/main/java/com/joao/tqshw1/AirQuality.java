@@ -17,7 +17,7 @@ public class AirQuality {
     public void setStatus(String status){ this.status = status; }
 
     public Info getData() {return data; }
-    //public void setData(Info[] data){ this.data = data; }
+    public void setData(Info data){ this.data = data; }
 
     public long getTime() { return time; }
     public void setTime(long time){ this.time = time; }

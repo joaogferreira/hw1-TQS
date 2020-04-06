@@ -20,7 +20,7 @@ public class AirQualityController {
     public AirQuality air(@PathVariable String city){
         if(!Cache.airQuality.containsKey(city))
             this.refresh(city);
-        if(System.currentTimeMillis() - Cache.airQuality.get(city).getTime() > 600000){ //10 minutos
+        if(System.currentTimeMillis() - Cache.airQuality.get(city).getTime() > 10000){ //10 segundos
             this.refresh(city);
         }
         return Cache.airQuality.get(city);
