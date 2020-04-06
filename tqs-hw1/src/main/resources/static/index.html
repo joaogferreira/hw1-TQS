@@ -25,18 +25,17 @@
 
 
     function callAPI() {
-        console.log("CALL API");
         const citySelect = document.getElementById("city");
         console.log(citySelect);
         const city = citySelect.options[citySelect.selectedIndex].text;
         console.log(city.valueOf());
         var json = fetch("http://localhost:8080/api/air/"+ city.toLowerCase())
             .then((resp) => resp.json())
-            .then(function (data) {
-                //document.getElementById("forecastDate").textContent = data["data"][day]["forecastDate"];
-                //document.getElementById("minTemp").textContent = data["data"][day]["tMin"];
-                //document.getElementById("maxTemp").textContent = data["data"][day]["tMax"];
-                //document.getElementById("windDirec").textContent = data["data"][day]["predWindDir"];
+            .then(function (info) {
+                console.log(info);
+                document.getElementById("status").textContent = info["status"].toUpperCase();
+                document.getElementById("aqi").textContent = info["data"]["aqi"];
+
             })
     }
 </script>
@@ -50,6 +49,16 @@
     <b>City: </b>
     <select id="city"></select>
     <button onclick="callAPI()">OK</button>
+    <br>
+    <div>
+        <b>Status: </b>
+        <span id="status"></span>
+    </div><br>
+    <div>
+        <b>AQI : </b>
+        <span id="aqi"></span>
+    </div><br>
+
 </div>
 </body>
 
