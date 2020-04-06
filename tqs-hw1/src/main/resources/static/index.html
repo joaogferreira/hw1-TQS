@@ -35,6 +35,16 @@
                 console.log(info);
                 document.getElementById("status").textContent = info["status"].toUpperCase();
                 document.getElementById("aqi").textContent = info["data"]["aqi"];
+                document.getElementById("no2").textContent = info["data"]["iaqi"]["no2"]["v"];
+                document.getElementById("p").textContent = info["data"]["iaqi"]["p"]["v"];
+                document.getElementById("o3").textContent = info["data"]["iaqi"]["o3"]["v"];
+                document.getElementById("pm25").textContent = info["data"]["iaqi"]["pm25"]["v"];
+                document.getElementById("t").textContent = info["data"]["iaqi"]["t"]["v"];
+                document.getElementById("so2").textContent = info["data"]["iaqi"]["so2"]["v"];
+                document.getElementById("w").textContent = info["data"]["iaqi"]["w"]["v"];
+                document.getElementById("h").textContent = info["data"]["iaqi"]["h"]["v"];
+                document.getElementById("pm10").textContent = info["data"]["iaqi"]["pm10"]["v"];
+                document.getElementById("co").textContent = info["data"]["iaqi"]["co"]["v"];
 
             })
     }
@@ -49,7 +59,7 @@
     <b>City: </b>
     <select id="city"></select>
     <button onclick="callAPI()">OK</button>
-    <br>
+    <br><br>
     <div>
         <b>Status: </b>
         <span id="status"></span>
@@ -58,6 +68,51 @@
         <b>AQI : </b>
         <span id="aqi"></span>
     </div><br>
+    <div>
+        <b>NO2 : </b>
+        <span id="no2"></span>
+    </div><br>
+    <div>
+        <b>P : </b>
+        <span id="p"></span>
+    </div><br>
+    <div>
+        <b>O3 : </b>
+        <span id="o3"></span>
+    </div><br>
+    <div>
+        <b>PM25 : </b>
+        <span id="pm25"></span>
+    </div><br>
+
+    <div>
+        <b>T : </b>
+        <span id="t"></span>
+    </div><br>
+    <div>
+        <b>SO2 : </b>
+        <span id="so2"></span>
+    </div><br>
+    <div>
+        <b>W : </b>
+        <span id="w"></span>
+    </div><br>
+
+    <div>
+        <b>H : </b>
+        <span id="h"></span>
+    </div><br>
+    <div>
+        <b>PM10 : </b>
+        <span id="pm10"></span>
+    </div><br>
+    <div>
+        <b>CO: </b>
+        <span id="co"></span>
+    </div><br>
+
+
+
 
 </div>
 </body>
