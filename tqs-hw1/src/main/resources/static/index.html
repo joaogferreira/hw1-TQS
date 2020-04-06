@@ -22,6 +22,20 @@
                 ;
             })
     }
+
+
+    function callAPI() {
+        const citySelect = document.getElementById("city");
+        const city = citySelect.options[citySelect.selectedIndex].value;
+        var json = fetch("http://localhost:8080/api/weather/"+place)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                document.getElementById("forecastDate").textContent = data["data"][day]["forecastDate"];
+                document.getElementById("minTemp").textContent = data["data"][day]["tMin"];
+                document.getElementById("maxTemp").textContent = data["data"][day]["tMax"];
+                document.getElementById("windDirec").textContent = data["data"][day]["predWindDir"];
+            })
+    }
 </script>
 
 
@@ -32,7 +46,7 @@
 <div>
     <b>City: </b>
     <select id="city"></select>
-    <button onclick="">OK</button>
+    <button onclick="callAPI()">OK</button>
 </div>
 </body>
 

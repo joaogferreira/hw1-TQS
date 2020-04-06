@@ -15,6 +15,7 @@ public class AirQualityController {
     private RestTemplate restTemplate;
     private String token = "366f681a7e36acc422397bb0c8f572d2e106ee04";
 
+    //http://localhost:8080/api/air/london
     @GetMapping("/air/{city}")
     public AirQuality air(@PathVariable String city){
         if(!Cache.airQuality.containsKey(city))
@@ -27,6 +28,7 @@ public class AirQualityController {
 
     private void refresh(String city){
         AirQuality air_qual = restTemplate.getForObject("https://api.waqi.info/feed/"+city+"/?token="+token,AirQuality.class);
+        System.out.println(air_qual);
         Cache.setAirQuality(city,air_qual);
     }
 
