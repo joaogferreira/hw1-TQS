@@ -1,11 +1,5 @@
 package com.joao.tqshw1;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AirQuality {
     private String status;
     private Info data;

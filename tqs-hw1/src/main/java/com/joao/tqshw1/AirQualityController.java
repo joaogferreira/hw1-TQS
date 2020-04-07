@@ -28,7 +28,6 @@ public class AirQualityController {
 
     private void refresh(String city){
         AirQuality air_qual = restTemplate.getForObject("https://api.waqi.info/feed/"+city+"/?token="+token,AirQuality.class);
-        System.out.println(air_qual);
         Cache.setAirQuality(city,air_qual);
     }
 

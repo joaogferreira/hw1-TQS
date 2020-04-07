@@ -27,10 +27,5 @@ public class Info {
 
 
     @Override
-    public String toString() {
-        return "Info{" +
-                "aqi=" + aqi +
-                ", iaqi=" + iaqi +
-                '}';
-    }
+    public String toString() { return "Info{" + "aqi=" + aqi + ", iaqi=" + iaqi + '}'; }
 }

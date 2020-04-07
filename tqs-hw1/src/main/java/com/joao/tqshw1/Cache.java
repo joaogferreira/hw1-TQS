@@ -2,8 +2,6 @@ package com.joao.tqshw1;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 
 public class Cache {
     protected static final Map<String,AirQuality> airQuality = new HashMap<>();
