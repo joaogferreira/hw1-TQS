@@ -86,5 +86,13 @@ public class CacheUnitTest {
         Assertions.assertEquals(station, Cache.getStations().get(id));
     }
 
+    @Test
+    public void testCountRequests() {
+        old_req = Cache.countRequests();
+        Cache.setAirQuality(city,airQuality);
+        new_req = Cache.countRequests();
+        Assertions.assertEquals(old_req+1,new_req);
+    }
+
 
 }
