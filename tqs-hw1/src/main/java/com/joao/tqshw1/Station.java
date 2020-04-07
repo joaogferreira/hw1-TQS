@@ -7,9 +7,9 @@ public class Station {
     public Station(int id, String city){ this.id = id; this.city = city; }
 
     public String getCity(){ return city; }
-    public int getID() { return id; }
-
     public void setCity(String new_city) { this.city = new_city; }
+
+    public int getID() { return id; }
     public void setID(int id){ this.id = id; }
 
     @Override

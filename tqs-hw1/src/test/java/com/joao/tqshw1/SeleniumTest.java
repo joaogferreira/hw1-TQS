@@ -1,8 +1,7 @@
 package com.joao.tqshw1;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-
-
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
@@ -52,7 +51,17 @@ public class SeleniumTest {
 
     @Test
     public void testElementPresence() {
-        boolean bool = isElementPresent(By.id("ok"));
-        Assertions.assertEquals(true,bool);
+        int count_false = 0;
+        boolean aux;
+        //Todos os supostos elementos da página
+        ArrayList<String> elems = new ArrayList<>();
+        elems.add("city"); elems.add("ok"); elems.add("status"); elems.add("aqi"); elems.add("no2"); elems.add("p"); elems.add("o3");
+        elems.add("pm25"); elems.add("t"); elems.add("so2"); elems.add("w"); elems.add("h"); elems.add("pm10"); elems.add("co");
+
+        for(int i=0;i<elems.size();i++){
+            aux = isElementPresent(By.id(elems.get(i)));
+            if (!aux) { count_false++; }
+        }
+        Assertions.assertEquals(0,count_false);
     };
 }

@@ -13,8 +13,17 @@ public class Cache {
         airQuality.put(city, airq);
         number_Requests++;
     }
-
-    public static int countRequests(){
-        return number_Requests;
+    public static Map<String,AirQuality> getAirQuality(){
+        return airQuality;
     }
+
+
+    public static void setStation (int id,Station station) {
+        stations.put(id,station);
+        number_Requests++;
+    }
+    public static Map<Integer,Station> getStations() { return stations; }
+
+
+    public static int countRequests(){ return number_Requests; }
 }
