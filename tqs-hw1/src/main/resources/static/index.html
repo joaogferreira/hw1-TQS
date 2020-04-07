@@ -23,8 +23,8 @@
             })
     }
 
-
     function callAPI() {
+        clearAll();
         const citySelect = document.getElementById("city");
         console.log(citySelect);
         const city = citySelect.options[citySelect.selectedIndex].text;
@@ -32,21 +32,34 @@
         var json = fetch("http://localhost:8080/api/air/"+ city.toLowerCase())
             .then((resp) => resp.json())
             .then(function (info) {
-                console.log(info);
-                document.getElementById("status").textContent = info["status"].toUpperCase();
+                document.getElementById("status").textContent = info["status"];
                 document.getElementById("aqi").textContent = info["data"]["aqi"];
-                document.getElementById("no2").textContent = info["data"]["iaqi"]["no2"]["v"];
-                document.getElementById("p").textContent = info["data"]["iaqi"]["p"]["v"];
-                document.getElementById("o3").textContent = info["data"]["iaqi"]["o3"]["v"];
-                document.getElementById("pm25").textContent = info["data"]["iaqi"]["pm25"]["v"];
-                document.getElementById("t").textContent = info["data"]["iaqi"]["t"]["v"];
-                document.getElementById("so2").textContent = info["data"]["iaqi"]["so2"]["v"];
-                document.getElementById("w").textContent = info["data"]["iaqi"]["w"]["v"];
-                document.getElementById("h").textContent = info["data"]["iaqi"]["h"]["v"];
-                document.getElementById("pm10").textContent = info["data"]["iaqi"]["pm10"]["v"];
-                document.getElementById("co").textContent = info["data"]["iaqi"]["co"]["v"];
-
+                const data_iaqi = info["data"]["iaqi"];
+                const keys = Object.keys(data_iaqi);
+                const html_elems = ["no2","p","o3","pm25","t","so2","w","h","pm10","co","wg","dew","r","wd"];
+                let i;
+                let j;
+                for (i = 0; i < keys.length; i++) {
+                    for(j =0; j < html_elems.length; j++) {
+                        if (keys[i]==html_elems[j]) {
+                            document.getElementById(html_elems[j]).textContent = data_iaqi[keys[i]]["v"];
+                        }
+                    }
+                }
+                for (i = 0; i < html_elems.length; i++) {
+                    if (document.getElementById(html_elems[i]).textContent == ""){
+                        document.getElementById(html_elems[i]).textContent = "Not available.";
+                    }
+                }
             })
+    }
+    
+    function clearAll() {
+        const html_elems = ["status","aqi","no2","p","o3","pm25","t","so2","w","h","pm10","co","wg","dew","r","wd"];
+        let i;
+        for (i = 0; i < html_elems.length; i++) {
+            document.getElementById(html_elems[i]).textContent = "";
+        }
     }
 </script>
 
@@ -109,6 +122,22 @@
     <div>
         <b>CO: </b>
         <span id="co"></span>
+    </div><br>
+    <div>
+        <b>WG: </b>
+        <span id="wg"></span>
+    </div><br>
+    <div>
+        <b>DEW: </b>
+        <span id="dew"></span>
+    </div><br>
+    <div>
+        <b>R: </b>
+        <span id="r"></span>
+    </div><br>
+    <div>
+        <b>WD: </b>
+        <span id="wd"></span>
     </div><br>
 
 
