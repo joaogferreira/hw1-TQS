@@ -1,5 +1,6 @@
 package com.joao.tqshw1;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +11,9 @@ import java.util.ArrayList;
 
 @SpringBootApplication
 public class TqsHw1Application {
+
+    @Autowired
+    private StationService service;
 
     public static void main(String[] args) {
         SpringApplication.run(TqsHw1Application.class, args);
@@ -49,7 +53,7 @@ public class TqsHw1Application {
         }
         return args -> {
             for(int i=0;i<aux.size();i++){
-                Cache.stations.put(aux.get(i).getID(),aux.get(i));
+                service.saveStation(aux.get(i).getID(),aux.get(i));
             }
         };
     }
