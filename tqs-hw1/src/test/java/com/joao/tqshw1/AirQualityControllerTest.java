@@ -60,5 +60,6 @@ public class AirQualityControllerTest {
          //Falta ver isto
             //Ver content Lenght
         //Ver se continua tudo a correr direito
+        //Ver media type , se dá para retornar td o conteudo 
     }
 }
