@@ -16,8 +16,12 @@ public class AirQuality {
     public long getTime() { return time; }
     public void setTime(long time){ this.time = time; }
 
-    public String toString(){
-        return "AirQuality{" + "status=" + status +  " time=" + time + '}';
+    @Override
+    public String toString() {
+        return "AirQuality{" +
+                "status='" + status + '\'' +
+                ", data=" + data +
+                ", \ntime=" + time +
+                '}';
     }
-
 }

@@ -1,11 +1,12 @@
 package com.joao.tqshw1;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api")
@@ -15,7 +16,6 @@ public class AirQualityController {
     private RestTemplate restTemplate;
     private String token = "366f681a7e36acc422397bb0c8f572d2e106ee04";
 
-    //http://localhost:8080/api/air/london
     @GetMapping("/air/{city}")
     public AirQuality air(@PathVariable String city){
         if(!Cache.airQuality.containsKey(city))
@@ -31,9 +31,23 @@ public class AirQualityController {
         Cache.setAirQuality(city,air_qual);
     }
 
+    /**
     @GetMapping("/stations")
     public Map<Integer,Station> stations(){
         return Cache.stations;
+    }
+     * @return*/
+    @GetMapping("/stations")
+    public String stations(){
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            String json = objectMapper.writeValueAsString(Cache.stations);
+            return json;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
