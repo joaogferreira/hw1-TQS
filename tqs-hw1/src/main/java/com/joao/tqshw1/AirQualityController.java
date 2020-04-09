@@ -56,11 +56,12 @@ public class AirQualityController {
         Map<Integer,Station> aux = service_station.returnStation();
 
         for(int i=0;i<aux.size();i++){
-            //System.out.println(aux.get(i).getCity());
-            if(aux.get(i).getCity().toLowerCase()==city){
+            System.out.println(aux.get(i).getCity());
+            if(aux.get(i).getCity().toLowerCase().equals(city.toLowerCase())){
                 return "City: "+aux.get(i).getCity() + " ID: " + Integer.toString(aux.get(i).getID());
             }
         }
-        return "Station not added yet.";
+        //Mapear para a funcao error
+        return "Station not found.";
     }
 }
