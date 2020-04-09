@@ -12,4 +12,8 @@ public class AirQualityService {
     public Map<String,AirQuality> returnAirQuality(){
         return Cache.getAirQuality();
     }
+
+    public void incrementHit() { }
+
+    public void incrementMiss() { }
 }

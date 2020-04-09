@@ -24,10 +24,15 @@ public class AirQualityController {
     public AirQuality air(@PathVariable String city){
         if(!service_air.returnAirQuality().containsKey(city)){
             this.refresh(city);
+            service_air.incrementMiss();
         }
-        if(System.currentTimeMillis() - service_air.returnAirQuality().get(city).getTime() > 10000) {
+        else if(System.currentTimeMillis() - service_air.returnAirQuality().get(city).getTime() > 10000) {
             this.refresh(city);
+            service_air.incrementMiss();
+        } else {
+            service_air.incrementHit();
         }
+
         return service_air.returnAirQuality().get(city);
     }
 
