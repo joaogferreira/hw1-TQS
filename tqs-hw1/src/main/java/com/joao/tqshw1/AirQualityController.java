@@ -1,22 +1,27 @@
 package com.joao.tqshw1;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.json.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api")
 public class AirQualityController {
 
     @Autowired
-    private AirQualityService service_air;
+    private AirQualityService service_air = new AirQualityService();
 
     @Autowired
-    private StationService service_station;
+    private StationService service_station = new StationService();
 
     @Autowired
     private RestTemplate restTemplate;
@@ -38,24 +43,15 @@ public class AirQualityController {
         service_air.saveAirQuality(city,air_quality);
     }
 
-    /**
+
     @GetMapping("/stations")
     public Map<Integer,Station> stations(){
         return service_station.returnStation();
     }
-    */
 
-    @GetMapping("/stations")
-    public String stations(){
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String json = objectMapper.writeValueAsString(service_station.returnStation());
-            return json;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @RequestMapping("/error")
+    @ResponseBody
+    public String handleError() {
+        return String.format("<html><body><h2>Error Page</h2>");
     }
-
-
 }
