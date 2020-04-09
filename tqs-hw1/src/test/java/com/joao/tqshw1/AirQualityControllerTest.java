@@ -38,7 +38,6 @@ public class AirQualityControllerTest {
 
 
         for (int i=0;i<cities_available.size();i++){
-            //System.out.println("Testing for "+cities_available.get(i));
             mockMvc.perform(MockMvcRequestBuilders.get("/api/air/"+cities_available.get(i)))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.status").value("ok"));

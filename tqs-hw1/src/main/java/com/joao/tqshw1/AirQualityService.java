@@ -13,7 +13,7 @@ public class AirQualityService {
         return Cache.getAirQuality();
     }
 
-    public void incrementHit() { }
+    public void incrementHit() { Cache.incHit(); }
 
-    public void incrementMiss() { }
+    public void incrementMiss() { Cache.incMiss(); }
 }

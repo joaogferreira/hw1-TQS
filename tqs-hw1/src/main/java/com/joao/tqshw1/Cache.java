@@ -31,10 +31,10 @@ public class Cache {
     public static int countRequests(){ return number_Requests; }
 
     public static int getMiss() { return miss; }
-    public static void setMiss() { miss++; }
+    public static void incMiss() { miss++; }
 
     public static int getHit() { return hit; }
-    public static void setHit() {  hit++; }
+    public static void incHit() {  hit++; }
 
     //Size
     public static int getAirQualityCurrentSize() { return airQuality.size(); }

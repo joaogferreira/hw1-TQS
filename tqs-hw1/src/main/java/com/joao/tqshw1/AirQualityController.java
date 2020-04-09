@@ -47,6 +47,10 @@ public class AirQualityController {
         return service_station.returnStation();
     }
 
+
+    @GetMapping("/stats")
+    public String getStats() {return "Hits: " + Cache.getHit() + "\nMiss: " + Cache.getMiss();}
+
     @RequestMapping("/error")
     @ResponseBody
     public String handleError() {
