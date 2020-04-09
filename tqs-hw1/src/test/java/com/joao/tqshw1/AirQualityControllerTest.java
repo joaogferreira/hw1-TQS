@@ -95,6 +95,10 @@ public class AirQualityControllerTest {
         Assertions.assertTrue(!split3[0].equals(null));
     }
 
+    @Test
+    public void testSpecificStation(){
+        //FAlta fazer este
+    }
 
     public static boolean isNumeric(String str) {
         try {
