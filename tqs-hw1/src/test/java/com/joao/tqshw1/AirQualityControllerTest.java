@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.Map;
@@ -72,7 +73,35 @@ public class AirQualityControllerTest {
     }
 
     @Test
-    public void testStats() throws Exception{
-        
+    public void testStats() throws Exception {
+        String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/stats"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        String[] split = result.split("<br>");
+        String hits = split[0];
+        String miss = split[1];
+
+        String[] split2 = hits.split(" ");
+        Assertions.assertTrue(isNumeric(split2[1]));
+        Assertions.assertTrue(!split2[0].isEmpty());
+        Assertions.assertTrue(!split2[0].equals(""));
+        Assertions.assertTrue(!split2[0].equals(null));
+
+        String[] split3 = miss.split(" ");
+        Assertions.assertTrue(isNumeric(split3[1]));
+        Assertions.assertTrue(!split3[0].isEmpty());
+        Assertions.assertTrue(!split3[0].equals(""));
+        Assertions.assertTrue(!split3[0].equals(null));
+    }
+
+
+    public static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 }

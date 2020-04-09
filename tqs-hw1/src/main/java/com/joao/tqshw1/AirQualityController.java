@@ -49,7 +49,7 @@ public class AirQualityController {
 
 
     @GetMapping("/stats")
-    public String getStats() {return "Hits: " + Cache.getHit() + "\nMiss: " + Cache.getMiss();}
+    public String getStats() {return "Hits: " + Cache.getHit() + "<br>Miss: " + Cache.getMiss();}
 
     @GetMapping("/station/{city}")
     public String SpecificStation(@PathVariable String city){
