@@ -26,7 +26,7 @@ public class AirQualityController {
             this.refresh(city);
             service_air.incrementMiss();
         }
-        else if(System.currentTimeMillis() - service_air.returnAirQuality().get(city).getTime() > 10000) {
+        else if(System.currentTimeMillis() - service_air.returnAirQuality().get(city).getTime() > 600000) { //10 minutos = 60*10*1000 ms
             this.refresh(city);
             service_air.incrementMiss();
         } else {
@@ -49,11 +49,6 @@ public class AirQualityController {
 
 
     @GetMapping("/stats")
-    public String getStats() {return "Hits: " + Cache.getHit() + "\nMiss: " + Cache.getMiss();}
-
-    @RequestMapping("/error")
-    @ResponseBody
-    public String handleError() {
-        return String.format("<html><body><h2>Error Page</h2>");
-    }
+    public String getStats() {return "Hits: " + Cache.getHit() + "/nMiss: " + Cache.getMiss();}
+    
 }
