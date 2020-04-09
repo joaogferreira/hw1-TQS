@@ -24,6 +24,9 @@ public class Cache {
     }
     public static Map<Integer,Station> getStations() { return stations; }
 
-
     public static int countRequests(){ return number_Requests; }
+
+    public static int getAirQualityCurrentSize() { return airQuality.size(); }
+
+    public static int getStationsCurrentSize() { return stations.size(); }
 }

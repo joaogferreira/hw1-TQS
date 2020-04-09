@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AssertionsKt;
 
 import java.util.Map;
 
@@ -18,6 +19,8 @@ public class CacheUnitTest {
     private int expected_size;
     private int old_req;
     private int new_req;
+    private int size1;
+    private int size2;
 
     @Before
     public void prepare() {
@@ -60,8 +63,11 @@ public class CacheUnitTest {
     @Test
     public void testGetAirQuality() {
         Cache.setAirQuality(city,airQuality);
-        Map<String,AirQuality> aq = Cache.getAirQuality();
-        Assertions.assertEquals(expected_size,aq.size());
+        Map <String,AirQuality> aq = Cache.getAirQuality();
+
+        Assertions.assertNotNull(aq);
+        Assertions.assertEquals(airQuality,aq.get(city));
+
     }
 
     @Test
@@ -82,8 +88,9 @@ public class CacheUnitTest {
     public void testGetStation() {
         Cache.setStation(station.getID(),station);
         Map<Integer,Station> st = Cache.getStations();
-        Assertions.assertEquals(expected_size,st.size());
-        Assertions.assertEquals(station, Cache.getStations().get(id));
+
+        Assertions.assertNotNull(st);
+        Assertions.assertEquals(station, st.get(id));
     }
 
     @Test
