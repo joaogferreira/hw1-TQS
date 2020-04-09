@@ -2,9 +2,7 @@ package com.joao.tqshw1;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.AssertionsKt;
 
 import java.util.Map;
 
@@ -16,7 +14,8 @@ public class CacheUnitTest {
     private String city;
     private Station station;
     private int id;
-    private int expected_size;
+    private int before_size;
+    private int after_size;
     private int old_req;
     private int new_req;
     private int size1;
@@ -39,19 +38,20 @@ public class CacheUnitTest {
         id=1;
         station = new Station(id,city);
 
-        expected_size=1;
         old_req=0;
         new_req=0;
     }
 
     @Test
     public void testSetAirQuality(){
-        old_req = Cache.countRequests();
+        before_size = Cache.getAirQuality().size();
         Cache.setAirQuality(city,airQuality);
-        new_req = Cache.countRequests();
 
-        //Number of requests
-        Assertions.assertEquals(old_req+1,new_req);
+        after_size = Cache.getAirQuality().size();
+
+        //Assert size before and after
+        //Assertions.assertEquals(before_size+1,after_size);
+        //Assertions.assertNotEquals(before_size,after_size);
 
         //Check if AirQuality object fields are equal
         Map<String,AirQuality> aq = Cache.getAirQuality();
@@ -62,8 +62,15 @@ public class CacheUnitTest {
 
     @Test
     public void testGetAirQuality() {
+        //Feito
         Cache.setAirQuality(city,airQuality);
+        old_req = Cache.countRequests();
         Map <String,AirQuality> aq = Cache.getAirQuality();
+        new_req = Cache.countRequests();
+
+        //Number of requests
+        Assertions.assertNotEquals(old_req,new_req);
+        Assertions.assertEquals(old_req+1,new_req);
 
         Assertions.assertNotNull(aq);
         Assertions.assertEquals(airQuality,aq.get(city));
@@ -72,12 +79,14 @@ public class CacheUnitTest {
 
     @Test
     public void testSetStation() {
-        old_req = Cache.countRequests();
+
+        before_size = Cache.getStations().size();
         Cache.setStation(station.getID(),station);
-        new_req = Cache.countRequests();
+        after_size = Cache.getStations().size();
 
         //Number of requests
-        Assertions.assertEquals(old_req+1,new_req);
+        Assertions.assertEquals(before_size+1,after_size);
+        Assertions.assertNotEquals(before_size,after_size);
 
         //Check if Station object fields are equals
         Map<Integer,Station> st = Cache.getStations();
@@ -87,18 +96,25 @@ public class CacheUnitTest {
     @Test
     public void testGetStation() {
         Cache.setStation(station.getID(),station);
+        old_req = Cache.countRequests();
         Map<Integer,Station> st = Cache.getStations();
+        new_req = Cache.countRequests();
 
         Assertions.assertNotNull(st);
         Assertions.assertEquals(station, st.get(id));
+
+        Assertions.assertNotEquals(old_req,new_req);
+        Assertions.assertEquals(old_req+1,new_req);
     }
 
     @Test
     public void testCountRequests() {
         old_req = Cache.countRequests();
-        Cache.setAirQuality(city,airQuality);
+        Cache.getAirQuality();
         new_req = Cache.countRequests();
+
         Assertions.assertEquals(old_req+1,new_req);
+        Assertions.assertNotEquals(old_req,new_req);
     }
 
 
