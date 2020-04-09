@@ -11,10 +11,10 @@ import java.util.Map;
 public class AirQualityController {
 
     @Autowired
-    private AirQualityService service_air = new AirQualityService();
+    private AirQualityService service_air; // = new AirQualityService();
 
     @Autowired
-    private StationService service_station = new StationService();
+    private StationService service_station; // = new StationService();
 
     @Autowired
     private RestTemplate restTemplate;
@@ -52,23 +52,15 @@ public class AirQualityController {
     public String getStats() {return "Hits: " + Cache.getHit() + "/nMiss: " + Cache.getMiss();}
 
     @GetMapping("/station/{city}")
-    public void SpecificStation(@PathVariable String city){
+    public String SpecificStation(@PathVariable String city){
         Map<Integer,Station> aux = service_station.returnStation();
 
         for(int i=0;i<aux.size();i++){
-            if(aux.get(i).getCity()==city){
-
-            }else{
-                //erro
+            //System.out.println(aux.get(i).getCity());
+            if(aux.get(i).getCity().toLowerCase()==city){
+                return "City: "+aux.get(i).getCity() + " ID: " + Integer.toString(aux.get(i).getID());
             }
         }
-
-        if(!service_station.returnStation().containsKey(city)){
-            //this.refresh(city);
-            //service_air.incrementMiss();
-        }
-
+        return "Station not added yet.";
     }
-
-
 }
