@@ -1,30 +1,18 @@
 package com.joao.tqshw1;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.Matchers.hasSize;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 import org.junit.Test;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -59,13 +47,10 @@ public class AirQualityControllerTest {
 
     @Test
     public void testStations() throws Exception {
+        //Está a retornar vazio
         mockMvc.perform(MockMvcRequestBuilders.get("/api/stations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.0").value("{\"city\":\"Shanghai\",\"id\":0}"));
 
-        //Falta ver isto
-        //Ver content Lenght
-        //Ver se continua tudo a correr direito
-        //Ver media type , se dá para retornar td o conteudo
     }
 }

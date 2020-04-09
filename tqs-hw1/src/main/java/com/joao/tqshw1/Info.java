@@ -1,7 +1,6 @@
 package com.joao.tqshw1;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Info {
     //Outros valores são retornados mas não têm qualquer valor no contexto do problema
