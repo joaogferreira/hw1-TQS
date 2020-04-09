@@ -14,14 +14,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AirQualityControllerTest {
     ArrayList<String> cities_available = new ArrayList<>();
+
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
-    AirQualityController controller; //= new AirQualityController();
+    AirQualityController controller;
+
     @BeforeEach
     public void setup() throws Exception {
         //this.mockMvc = standaloneSetup(this.controller).build();
     }
+
     @Test
     public void testAir() throws Exception {
         //Add all the cities available
@@ -35,6 +39,7 @@ public class AirQualityControllerTest {
                     .andExpect(jsonPath("$.status").value("ok"));
         }
     }
+
     @Test
     public void testStations() throws Exception {
         //Estava a retornar vazio
