@@ -25,30 +25,28 @@ public class CacheUnitTest {
 
     @Before
     public void prepare() {
-        airQuality = new AirQuality();;
+        airQuality = new AirQuality();
+        time = System.currentTimeMillis();
     }
 
     @Test
     public void testSetAirQuality(){
         before_size = airQualityMap.size();
         Cache.setAirQuality("Porto",airQuality);
-
         after_size = airQualityMap.size();
+
         //Assert size before and after
         Assertions.assertEquals(before_size+1,after_size);
-        //Assertions.assertNotEquals(before_size,after_size);
+        Assertions.assertNotEquals(before_size,after_size);
 
-        //Check if AirQuality object fields are equal
+        //Check if AirQuality objects are equal
         Map<String,AirQuality> aq = Cache.getAirQuality();
-        Assertions.assertEquals(info,aq.get("Porto").getData());
-        Assertions.assertEquals(status,aq.get("Porto").getStatus());
-        Assertions.assertTrue(aq.get("Porto").getTime()>time);
+        Assertions.assertEquals(aq.get("Porto"),airQuality);
     }
 
     @Test
     public void testGetAirQuality() {
-        //Feito
-        Cache.setAirQuality(city,airQuality);
+        Cache.setAirQuality("Aveiro",airQuality);
         old_req = Cache.countRequests();
         Map <String,AirQuality> aq = Cache.getAirQuality();
         new_req = Cache.countRequests();
@@ -58,13 +56,13 @@ public class CacheUnitTest {
         Assertions.assertEquals(old_req+1,new_req);
 
         Assertions.assertNotNull(aq);
-        Assertions.assertEquals(airQuality,aq.get(city));
+        Assertions.assertEquals(airQuality,aq.get("Aveiro"));
 
     }
 
     @Test
     public void testSetStation() {
-        station = new Station(1,"Aveiro");
+        station = new Station(1,"Coimbra");
         before_size = Cache.getStations().size();
         Cache.setStation(station.getID(),station);
         after_size = Cache.getStations().size();
@@ -76,11 +74,11 @@ public class CacheUnitTest {
         //Check if Station object fields are equals
         Map<Integer,Station> st = Cache.getStations();
         Assertions.assertEquals(1,st.get(1).getID());
-        Assertions.assertEquals("Aveiro",st.get(1).getCity());
+        Assertions.assertEquals("Coimbra",st.get(1).getCity());
     }
     @Test
     public void testGetStation() {
-        station = new Station(2,"Coimbra");
+        station = new Station(2,"Bragança");
         Cache.setStation(station.getID(),station);
         old_req = Cache.countRequests();
         Map<Integer,Station> st = Cache.getStations();
@@ -88,7 +86,7 @@ public class CacheUnitTest {
 
         Assertions.assertNotNull(st);
         Assertions.assertEquals(station, st.get(2));
-
+        
         Assertions.assertNotEquals(old_req,new_req);
         Assertions.assertEquals(old_req+1,new_req);
     }
