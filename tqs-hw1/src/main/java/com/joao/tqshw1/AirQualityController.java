@@ -23,11 +23,11 @@ public class AirQualityController {
     @GetMapping("/air/{city}")
     public AirQuality air(@PathVariable String city){
         if(!service_air.returnAirQuality().containsKey(city)){
-            this.refresh(city);
+            this.refresh_city(city);
             service_air.incrementMiss();
         }
         else if(System.currentTimeMillis() - service_air.returnAirQuality().get(city).getTime() > 600000) { //10 minutos = 60*10*1000 ms
-            this.refresh(city);
+            this.refresh_city(city);
             service_air.incrementMiss();
         } else {
             service_air.incrementHit();
@@ -36,7 +36,7 @@ public class AirQualityController {
         return service_air.returnAirQuality().get(city);
     }
 
-    private void refresh(String city){
+    private void refresh_city(String city){
         AirQuality air_quality = restTemplate.getForObject("https://api.waqi.info/feed/"+city+"/?token="+token,AirQuality.class);
         service_air.saveAirQuality(city,air_quality);
     }
@@ -50,5 +50,25 @@ public class AirQualityController {
 
     @GetMapping("/stats")
     public String getStats() {return "Hits: " + Cache.getHit() + "/nMiss: " + Cache.getMiss();}
-    
+
+    @GetMapping("/station/{city}")
+    public void SpecificStation(@PathVariable String city){
+        Map<Integer,Station> aux = service_station.returnStation();
+
+        for(int i=0;i<aux.size();i++){
+            if(aux.get(i).getCity()==city){
+
+            }else{
+                //erro
+            }
+        }
+
+        if(!service_station.returnStation().containsKey(city)){
+            //this.refresh(city);
+            //service_air.incrementMiss();
+        }
+
+    }
+
+
 }
