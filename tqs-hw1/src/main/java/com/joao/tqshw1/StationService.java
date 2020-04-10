@@ -18,13 +18,4 @@ public class StationService {
 
     public void incrementMiss() { Cache.incMiss(); }
 
-
-    public Object[] getStationDetails(int id){
-        Map<Integer,Station> stations = returnStation();
-        Object[] res = new String[2];
-        System.out.println(stations.get(id));
-        res[0] = stations.get(id).getID();
-        res[1] = stations.get(id).getCity();
-        return res;
-    }
 }
