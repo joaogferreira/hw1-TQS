@@ -9,6 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class SeleniumTest {
+    //Functional test on the web interface - Selenium WebDriver
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;

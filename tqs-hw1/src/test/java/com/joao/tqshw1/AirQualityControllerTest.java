@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class AirQualityControllerTest {
+    //Integração - MockMvc
     ArrayList<String> cities_available = new ArrayList<>();
 
     @Autowired

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import java.util.Map;
 
 public class CacheUnitTest {
+    //Unit Test - JUNIT
     private AirQuality airQuality;
     private Info info;
     private String status;
