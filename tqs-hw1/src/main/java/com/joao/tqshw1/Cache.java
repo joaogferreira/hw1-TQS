@@ -37,4 +37,12 @@ public class Cache {
     public static int getHit() { return hit; }
     public static void incHit() {  hit++; }
 
+    //FALTAM TESTAR
+    public Station getStationByID(int id) {
+        return stations.get(id);
+    }
+
+    public AirQuality getAirQualityByCity(String city){
+        return airQuality.get(city);
+    }
 }
