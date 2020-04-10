@@ -7,7 +7,6 @@ public class Info {
     private int aqi;
     private HashMap<String,HashMap<String,Integer>> iaqi;
 
-
     public int getAqi() {
         return aqi;
     }
@@ -23,7 +22,6 @@ public class Info {
     public void setIaqi(HashMap<String, HashMap<String, Integer>> iaqi) {
         this.iaqi = iaqi;
     }
-
 
     @Override
     public String toString() { return "Info{" + "aqi=" + aqi + ", iaqi=" + iaqi + '}'; }

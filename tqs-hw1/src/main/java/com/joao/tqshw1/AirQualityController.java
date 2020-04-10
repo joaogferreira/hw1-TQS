@@ -63,7 +63,6 @@ public class AirQualityController {
                         +"!<br>City: "+aux.get(i).getCity() + "<br>ID: " + Integer.toString(aux.get(i).getID());
             }
         }
-        //Mapear para a funcao error
         service_station.incrementMiss();
         return "Station not found.";
     }

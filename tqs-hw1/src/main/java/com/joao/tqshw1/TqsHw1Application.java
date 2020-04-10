@@ -30,19 +30,12 @@ public class TqsHw1Application {
          */
         int ctr = 0;
         ArrayList<String> city_names = new ArrayList<>();
-        city_names.add("Shanghai");
-        city_names.add("Paris");
-        city_names.add("London");
-        city_names.add("Lisbon");
-        city_names.add("Berlin");
-        city_names.add("Tokyo");
-        city_names.add("Munchen");
-        city_names.add("Denver");
-        city_names.add("Helsinki");
-        city_names.add("Stockholm");
-        city_names.add("Moscow");
-        city_names.add("Madrid");
-
+        city_names.add("Shanghai");city_names.add("Paris");
+        city_names.add("London");city_names.add("Lisbon");
+        city_names.add("Berlin");city_names.add("Tokyo");
+        city_names.add("Munchen");city_names.add("Denver");
+        city_names.add("Helsinki");city_names.add("Stockholm");
+        city_names.add("Moscow");city_names.add("Madrid");
 
         ArrayList<Station> aux = new ArrayList<>();
 

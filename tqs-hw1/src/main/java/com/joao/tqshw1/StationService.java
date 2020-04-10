@@ -5,7 +5,6 @@ import java.util.Map;
 
 @Service
 public class StationService {
-
     public void saveStation(int id, Station st) { Cache.setStation(id, st); }
 
     public Map<Integer,Station> returnStation(){
