@@ -55,12 +55,18 @@ public class AirQualityController {
     public String SpecificStation(@PathVariable String city){
         Map<Integer,Station> aux = service_station.returnStation();
 
+        //As stations não têm TTL pelo que apenas poderá ser avaliado se o valor esperado está em cache ou não
         for(int i=0;i<aux.size();i++){
             if(aux.get(i).getCity().toLowerCase().equals(city.toLowerCase())){
-                return "City: "+aux.get(i).getCity() + " ID: " + Integer.toString(aux.get(i).getID());
+                service_station.incrementHit();
+                return "There is a station in "+ city.substring(0, 1).toUpperCase() + city.substring(1)
+                        +"!<br>City: "+aux.get(i).getCity() + "<br>ID: " + Integer.toString(aux.get(i).getID());
             }
         }
         //Mapear para a funcao error
+        service_station.incrementMiss();
         return "Station not found.";
     }
+
+
 }

@@ -11,4 +11,8 @@ public class StationService {
     public Map<Integer,Station> returnStation(){
         return Cache.getStations();
     }
+
+    public void incrementHit() { Cache.incHit(); }
+
+    public void incrementMiss() { Cache.incMiss(); }
 }
