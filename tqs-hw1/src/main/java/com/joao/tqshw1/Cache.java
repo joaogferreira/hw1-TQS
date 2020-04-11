@@ -1,5 +1,6 @@
 package com.joao.tqshw1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,11 +39,35 @@ public class Cache {
     public static void incHit() {  hit++; }
 
     //FALTAM TESTAR
+    //SE NAO TIVER CHAMADA NO CONTROLLER NEM NO SERVICE É PARA TESTAR NO UNIT
     public Station getStationByID(int id) {
         return stations.get(id);
     }
 
     public AirQuality getAirQualityByCity(String city){
         return airQuality.get(city);
+    }
+
+    //daqui para baixo é unit
+    public boolean isValid(String city){
+        long time = airQuality.get(city).getTime();
+
+        if(System.currentTimeMillis() - time > 600000) {
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<String> getCitiesAvailable(){
+        ArrayList<String> aux = new ArrayList<>();
+
+        for(int i=0;i<stations.size();i++){
+            aux.add(stations.get(i).getCity());
+        }
+
+        return aux;
+    }
+    public int getHitAndMiss(){
+        return getHit()+getMiss();
     }
 }

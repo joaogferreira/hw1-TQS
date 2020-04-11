@@ -17,22 +17,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class AirQualityServiceTest {
+
     @Mock (lenient = true)
     private Cache cache;
 
     @InjectMocks
     private AirQualityService airQualityService;
 
+    ArrayList<String> citiesAvailable = new ArrayList<>();
+
     @BeforeEach
     public void setup() throws Exception {
-        List<String> citiesAvailable = new ArrayList<>();
         String[] cities = {"Las Vegas","Ibiza","Miami","Amsterdam","Bangkok"};
         for (String city : cities)
             citiesAvailable.add(city);
 
-        HashMap<String,Integer> stats = new HashMap<>();
-        stats.put("Hit",200);
-        stats.put("Miss",75);
+
+        int miss = 75;
+        int hit = 200;
 
         HashMap<String,HashMap<String,Float>> info_example = new HashMap<>();
 
@@ -49,6 +51,18 @@ public class AirQualityServiceTest {
 
         long timestamp = new Timestamp(System.currentTimeMillis()).getTime();
 
-        AirQuality airquality = new AirQuality("ok",info,timestamp);
+        AirQuality airquality_ibiza = new AirQuality("ok",info,timestamp);
+
+        Mockito.when(cache.getCitiesAvailable()).thenReturn(citiesAvailable);
+        Mockito.when(cache.getHitAndMiss()).thenReturn(hit+miss);
+        Mockito.when(cache.getAirQualityByCity("Ibiza")).thenReturn(airquality_ibiza);
+        Mockito.when(cache.getAirQualityByCity("Vigo")).thenReturn(null);
+    }
+
+    @Test
+    public void validCity(){
+        for(int i=0;i<citiesAvailable.size();i++){
+            assertThat(cache.isValid(citiesAvailable.get(i)));
+        }
     }
 }
