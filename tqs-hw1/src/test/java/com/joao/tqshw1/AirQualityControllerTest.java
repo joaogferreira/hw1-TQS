@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -56,18 +57,9 @@ public class AirQualityControllerTest {
 
         //ArrayList com as cidades
         //Percorrer as cidades e fazer o assert em baixo
-        Assertions.assertTrue(result.contains("Shanghai"));
-        Assertions.assertTrue(result.contains("Paris"));
-        Assertions.assertTrue(result.contains("London"));
-        Assertions.assertTrue(result.contains("Lisbon"));
-        Assertions.assertTrue(result.contains("Berlin"));
-        Assertions.assertTrue(result.contains("Tokyo"));
-        Assertions.assertTrue(result.contains("Munchen"));
-        Assertions.assertTrue(result.contains("Denver"));
-        Assertions.assertTrue(result.contains("Helsinki"));
-        Assertions.assertTrue(result.contains("Stockholm"));
-        Assertions.assertTrue(result.contains("Moscow"));
-        Assertions.assertTrue(result.contains("Madrid"));
+        for(int i=0;i<cities_available.size();i++){
+            assertThat(result.contains(cities_available.get(i))).isEqualTo(true);
+        }
     }
 
     @Test
@@ -81,21 +73,37 @@ public class AirQualityControllerTest {
         String miss = split[1];
 
         String[] split2 = hits.split(" ");
-        Assertions.assertTrue(isNumeric(split2[1]));
-        Assertions.assertTrue(!split2[0].isEmpty());
-        Assertions.assertTrue(!split2[0].equals(""));
-        Assertions.assertTrue(!split2[0].equals(null));
+        assertThat(isNumeric(split2[1])).isEqualTo(true); //true
+        assertThat(!split2[0].isEmpty()).isEqualTo(true); //true
+        assertThat(!split2[0].equals("")).isEqualTo(true); //true
+        assertThat(!split2[0].equals(null)).isEqualTo(true); //true
 
         String[] split3 = miss.split(" ");
-        Assertions.assertTrue(isNumeric(split3[1]));
-        Assertions.assertTrue(!split3[0].isEmpty());
-        Assertions.assertTrue(!split3[0].equals(""));
-        Assertions.assertTrue(!split3[0].equals(null));
+        assertThat(isNumeric(split3[1])).isEqualTo(true);
+        assertThat(!split3[0].isEmpty()).isEqualTo(true);
+        assertThat(!split3[0].equals("")).isEqualTo(true);
+        assertThat(!split3[0].equals(null)).isEqualTo(true);
     }
 
     @Test
-    public void testSpecificStation(){
-        //FAlta fazer este
+    public void testSpecificStation() throws Exception {
+        String result,city;
+        String[] split;
+
+        cities_available.add("shanghai");cities_available.add("paris");cities_available.add("london");
+        cities_available.add("lisbon");cities_available.add("berlin");cities_available.add("tokyo");
+        cities_available.add("munchen");cities_available.add("denver");cities_available.add("helsinki");
+        cities_available.add("stockholm");cities_available.add("moscow");cities_available.add("madrid");
+        for (int i=0;i<cities_available.size();i++){
+
+            result = mockMvc.perform(MockMvcRequestBuilders.get("/api/station/"+cities_available.get(i)))
+                    .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+            split = result.split("<br>");
+            city = split[1].split(" ")[1].trim().toLowerCase();
+
+            assertThat(cities_available.contains(city)).isEqualTo(true);
+        }
     }
 
     public static boolean isNumeric(String str) {

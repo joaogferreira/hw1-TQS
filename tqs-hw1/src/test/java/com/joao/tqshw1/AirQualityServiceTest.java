@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class AirQualityServiceTest {
-
+    //Service Level tests
     @Mock (lenient = true)
     private Cache cache;
 
