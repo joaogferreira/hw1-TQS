@@ -12,17 +12,11 @@ public class CacheUnitTest {
     //Unit Test - JUNIT
     private AirQuality airQuality;
     private Info info;
-    private String status;
+    private String status,city;
     private long time;
-    private String city;
     private Station station;
-    private int id;
-    private int before_size;
-    private int after_size;
-    private int old_req;
-    private int new_req;
-    private int size1;
-    private int size2;
+    private int id, before_size, after_size, old_req, new_req, size1, size2;
+
     Map<String,AirQuality> airQualityMap = Cache.getAirQuality();
     Map<Integer,Station> stationMap = Cache.getStations();
 
