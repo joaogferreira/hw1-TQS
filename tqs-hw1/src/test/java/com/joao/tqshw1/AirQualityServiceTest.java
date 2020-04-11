@@ -65,4 +65,9 @@ public class AirQualityServiceTest {
             assertThat(cache.isValid(citiesAvailable.get(i)));
         }
     }
+
+    @Test
+    public void invalidCity(){
+        assertThat(!cache.isValid("Maia"));
+    }
 }
