@@ -67,15 +67,7 @@ public class Cache {
     public Station getStationByID(int id) {
         return stations.get(id);
     }
-    //FALTAM TESTAR
 
-
-    public AirQuality getAirQualityByCity(String city){
-        return airQuality.get(city);
-    }
-
-
-
-
+    public AirQuality getAirQualityByCity(String city){ return airQuality.get(city); }
 
 }

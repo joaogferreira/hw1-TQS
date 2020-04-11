@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import javax.swing.tree.ExpandVetoException;
 import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -101,6 +105,21 @@ public class AirQualityControllerTest {
             city = split[1].split(" ")[1].trim().toLowerCase();
 
             assertThat(cities_available.contains(city)).isEqualTo(true);
+        }
+    }
+
+    @Test
+    public void testSpecificStationWrongCity() throws Exception{
+        String result,city;
+        String[] split;
+
+        ArrayList<String> wrong_cities = new ArrayList<>();
+        wrong_cities.add("Gondomar");wrong_cities.add("Gaia");wrong_cities.add("Matosinhos");
+
+        for (int i=0;i<wrong_cities.size();i++){
+            String res = mockMvc.perform(MockMvcRequestBuilders.get("/api/station/"+wrong_cities.get(i)))
+                    .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+            assertThat(res.equals("Station not found.")).isEqualTo(true);
         }
     }
 

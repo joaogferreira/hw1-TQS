@@ -178,13 +178,12 @@ public class CacheUnitTest {
         Info info = new Info(27,info_example);
 
         time = new Timestamp(System.currentTimeMillis()).getTime();
-        sleep(10);
         airQuality = new AirQuality("ok",info,time);
         cache.setAirQuality("Portalegre",airQuality);
 
         AirQuality airQualityReceived = cache.getAirQualityByCity("Portalegre");
-        System.out.println(airQualityReceived.getTime()+"|"+time);
-        System.out.println(airQualityReceived.getStatus()+"|"+"ok");
-        System.out.println(airQualityReceived.getData().equals(info));
+        assertThat(airQualityReceived.getTime()>=time).isEqualTo(true); //o tempo de registo pode ser ligeiramente superior
+        assertThat(airQualityReceived.getStatus().equals("ok"));
+        assertThat(airQualityReceived.getData().equals(info));
     }
 }
