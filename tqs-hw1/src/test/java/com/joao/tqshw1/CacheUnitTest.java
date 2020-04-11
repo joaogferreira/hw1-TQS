@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CacheUnitTest {
     //Unit Test - JUNIT
@@ -48,12 +49,12 @@ public class CacheUnitTest {
         after_size = airQualityMap.size();
 
         //Assert size before and after
-        Assertions.assertEquals(before_size+1,after_size);
-        Assertions.assertNotEquals(before_size,after_size);
+        assertThat(before_size+1==after_size).isEqualTo(true);
+        assertThat(before_size==after_size).isEqualTo(false);
 
         //Check if AirQuality objects are equal
         Map<String,AirQuality> aq = Cache.getAirQuality();
-        Assertions.assertEquals(aq.get("Porto"),airQuality);
+        assertThat(aq.get("Porto").equals(airQuality)).isEqualTo(true);
     }
 
     @Test
@@ -64,11 +65,12 @@ public class CacheUnitTest {
         new_req = Cache.countRequests();
 
         //Number of requests
-        Assertions.assertNotEquals(old_req,new_req);
-        Assertions.assertEquals(old_req+1,new_req);
+        assertThat(old_req==new_req).isEqualTo(false);
+        assertThat(old_req+1==new_req).isEqualTo(true);
 
-        Assertions.assertNotNull(aq);
-        Assertions.assertEquals(airQuality,aq.get("Aveiro"));
+        assertThat(aq.equals(null)).isEqualTo(false);
+        assertThat(airQuality.equals(aq.get("Aveiro"))).isEqualTo(true);
+
 
     }
 
@@ -80,13 +82,14 @@ public class CacheUnitTest {
         after_size = Cache.getStations().size();
 
         //Number of requests
-        Assertions.assertEquals(before_size+1,after_size);
-        Assertions.assertNotEquals(before_size,after_size);
+        assertThat(before_size+1==after_size).isEqualTo(true);
+        assertThat(before_size==after_size).isEqualTo(false);
 
         //Check if Station object fields are equals
         Map<Integer,Station> st = Cache.getStations();
-        Assertions.assertEquals(1,st.get(1).getID());
-        Assertions.assertEquals("Coimbra",st.get(1).getCity());
+        assertThat(1==st.get(1).getID()).isEqualTo(true);
+        assertThat("Coimbra".equals(st.get(1).getCity())).isEqualTo(true);
+
     }
     @Test
     public void testGetStation() {
@@ -96,11 +99,11 @@ public class CacheUnitTest {
         Map<Integer,Station> st = Cache.getStations();
         new_req = Cache.countRequests();
 
-        Assertions.assertNotNull(st);
-        Assertions.assertEquals(station, st.get(2));
+        assertThat(st.equals(null)).isEqualTo(false);
+        assertThat(station.equals(st.get(2))).isEqualTo(true);
 
-        Assertions.assertNotEquals(old_req,new_req);
-        Assertions.assertEquals(old_req+1,new_req);
+        assertThat(old_req==new_req).isEqualTo(false);
+        assertThat(old_req+1==new_req).isEqualTo(true);
     }
 
     @Test
@@ -109,8 +112,8 @@ public class CacheUnitTest {
         Cache.getAirQuality();
         new_req = Cache.countRequests();
 
-        Assertions.assertEquals(old_req+1,new_req);
-        Assertions.assertNotEquals(old_req,new_req);
+        assertThat(old_req+1==new_req).isEqualTo(true);
+        assertThat(old_req==new_req).isEqualTo(false);
     }
 
 
