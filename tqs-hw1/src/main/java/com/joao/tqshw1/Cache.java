@@ -39,36 +39,43 @@ public class Cache {
     public static void incHit() {  hit++; }
 
     //
-    //FALTAM TESTAR
-    //SE NAO TIVER CHAMADA NO CONTROLLER NEM NO SERVICE É PARA TESTAR NO UNIT
+    public boolean isValid(String city){
+        long time = airQuality.get(city).getTime();
+
+        if(System.currentTimeMillis() - time >= 600000) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public ArrayList<String> getCitiesAvailable(){
+        ArrayList<String> aux = new ArrayList<>();
+        Integer[] ids = stations.keySet().toArray(new Integer[0]);
+
+        for(int i=0;i<ids.length;i++){
+            aux.add(stations.get(ids[i]).getCity());
+        }
+
+        return aux;
+    }
+
+    public int getHitAndMiss(){
+        return getHit()+getMiss();
+    }
+
     public Station getStationByID(int id) {
         return stations.get(id);
     }
+    //FALTAM TESTAR
+
 
     public AirQuality getAirQualityByCity(String city){
         return airQuality.get(city);
     }
 
-    //daqui para baixo é unit
-    public boolean isValid(String city){
-        long time = airQuality.get(city).getTime();
 
-        if(System.currentTimeMillis() - time > 600000) {
-            return true;
-        }
-        return false;
-    }
 
-    public ArrayList<String> getCitiesAvailable(){
-        ArrayList<String> aux = new ArrayList<>();
 
-        for(int i=0;i<stations.size();i++){
-            aux.add(stations.get(i).getCity());
-        }
 
-        return aux;
-    }
-    public int getHitAndMiss(){
-        return getHit()+getMiss();
-    }
 }
