@@ -25,7 +25,8 @@ public class AirQualityServiceTest {
     private AirQualityService airQualityService;
 
     ArrayList<String> citiesAvailable = new ArrayList<>();
-    AirQuality airquality_ibiza;
+    AirQuality airquality;
+    int miss,hit;
 
     @BeforeEach
     public void setup() throws Exception {
@@ -34,8 +35,8 @@ public class AirQualityServiceTest {
             citiesAvailable.add(city);
 
 
-        int miss = 75;
-        int hit = 200;
+        miss = 75;
+        hit = 200;
 
         HashMap<String,HashMap<String,Float>> info_example = new HashMap<>();
 
@@ -52,17 +53,19 @@ public class AirQualityServiceTest {
 
         long timestamp = new Timestamp(System.currentTimeMillis()).getTime();
 
-        airquality_ibiza = new AirQuality("ok",info,timestamp);
+        airquality = new AirQuality("ok",info,timestamp);
 
         Mockito.when(cache.getCitiesAvailable()).thenReturn(citiesAvailable);
         Mockito.when(cache.getHitAndMiss()).thenReturn(hit+miss);
-        Mockito.when(cache.getAirQualityByCity("Ibiza")).thenReturn(airquality_ibiza);
+
+        for(int i=0;i<citiesAvailable.size();i++){
+            Mockito.when(cache.isValid(citiesAvailable.get(i))).thenReturn(true);
+            Mockito.when(cache.getAirQualityByCity(citiesAvailable.get(i))).thenReturn(airquality);
+        }
+
         Mockito.when(cache.getAirQualityByCity("Vigo")).thenReturn(null);
-        Mockito.when(cache.isValid("Las Vegas")).thenReturn(true);
-        Mockito.when(cache.isValid("Ibiza")).thenReturn(true);
-        Mockito.when(cache.isValid("Miami")).thenReturn(true);
-        Mockito.when(cache.isValid("Amsterdam")).thenReturn(true);
-        Mockito.when(cache.isValid("Bangkok")).thenReturn(true);
+        Mockito.when(cache.isValid("Esgueira")).thenReturn(false);
+
     }
 
     @Test
@@ -79,11 +82,26 @@ public class AirQualityServiceTest {
 
     @Test
     public void whenValidCity_thenAirQualityCorrect(){
-        assertThat(cache.getAirQualityByCity("Ibiza")).isEqualTo(airquality_ibiza);
+        for(int i=0;i<citiesAvailable.size();i++){
+            assertThat(cache.getAirQualityByCity(citiesAvailable.get(i))).isEqualTo(airquality);
+        }
     }
 
     @Test
     public void whenInvalidCity_thenAirQualityNull(){
-        assertThat(cache.getAirQualityByCity("Faro")).isEqualTo(null);
+        assertThat(cache.getAirQualityByCity("Vigo")).isEqualTo(null);
+    }
+
+    @Test
+    public void given5Cities_whenGetAll_Return5Records(){
+        for(int i=0;i<citiesAvailable.size();i++){
+            assertThat(cache.getCitiesAvailable().contains(citiesAvailable.get(i))).isEqualTo(true);
+        }
+        assertThat(cache.getCitiesAvailable().size()).isEqualTo(5);
+    }
+
+    @Test
+    public void givenStats(){
+        assertThat(cache.getHitAndMiss()).isEqualTo(hit+miss);
     }
 }

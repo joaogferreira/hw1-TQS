@@ -38,6 +38,7 @@ public class Cache {
     public static int getHit() { return hit; }
     public static void incHit() {  hit++; }
 
+    //
     //FALTAM TESTAR
     //SE NAO TIVER CHAMADA NO CONTROLLER NEM NO SERVICE É PARA TESTAR NO UNIT
     public Station getStationByID(int id) {
