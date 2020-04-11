@@ -5,6 +5,12 @@ public class AirQuality {
     private Info data;
     private long time;
 
+    public AirQuality(String status,Info data,long time){
+        this.status = status;
+        this.data = data;
+        this.time = time;
+    }
+
     public String getStatus(){
         return status;
     }

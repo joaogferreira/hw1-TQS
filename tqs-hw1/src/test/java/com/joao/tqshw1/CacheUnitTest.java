@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CacheUnitTest {
@@ -26,8 +28,23 @@ public class CacheUnitTest {
 
     @Before
     public void prepare() {
-        airQuality = new AirQuality();
-        time = System.currentTimeMillis();
+        HashMap<String, HashMap<String,Float>> info_example = new HashMap<>();
+
+        HashMap<String,Float> toPutInInfo1 = new HashMap<>();
+        HashMap<String,Float> toPutInInfo2 = new HashMap<>();
+
+        toPutInInfo1.put("v", (float) 2.0);
+        toPutInInfo2.put("v", (float) 17.4);
+
+        info_example.put("co",toPutInInfo1);
+        info_example.put("pm25",toPutInInfo2);
+
+        Info info = new Info(20,info_example);
+
+        time = new Timestamp(System.currentTimeMillis()).getTime();
+
+        airQuality = new AirQuality("ok",info,time);
+
     }
 
     @Test
