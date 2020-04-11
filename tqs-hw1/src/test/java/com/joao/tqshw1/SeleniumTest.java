@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SeleniumTest {
     //Functional test on the web interface - Selenium WebDriver
@@ -26,18 +27,24 @@ public class SeleniumTest {
     @After
     public void tearDown() throws Exception {
         driver.quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            Assertions.fail(verificationErrorString);
+        String string_error= verificationErrors.toString();
+        if (!"".equals(string_error)) {
+            Assertions.fail(string_error);
         }
     }
 
     @Test
     public void test() throws Exception {
         driver.get("http://localhost:8080");
-        new Select(driver.findElement(By.id("city"))).selectByVisibleText("London");
-        driver.findElement(By.id("ok")).click();
-        //driver.findElement(By.xpath("//button[@type='button']")).click();
+        ArrayList<String> city_names = new ArrayList<>();
+        city_names.add("Shanghai");city_names.add("Paris");city_names.add("London");city_names.add("Lisbon");
+        city_names.add("Berlin");city_names.add("Tokyo");city_names.add("Munchen");city_names.add("Denver");
+        city_names.add("Helsinki");city_names.add("Stockholm");city_names.add("Moscow");city_names.add("Madrid");
+
+        for(int i=0;i<city_names.size();i++){
+            new Select(driver.findElement(By.id("city"))).selectByVisibleText(city_names.get(i));
+            driver.findElement(By.id("ok")).click();
+        }
     }
 
     private boolean isElementPresent(By by) {
@@ -63,6 +70,6 @@ public class SeleniumTest {
             aux = isElementPresent(By.id(elems.get(i)));
             if (!aux) { count_false++; }
         }
-        Assertions.assertEquals(0,count_false);
+        assertThat(count_false==0).isEqualTo(true);
     };
 }
