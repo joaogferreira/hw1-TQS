@@ -74,7 +74,11 @@ public class AirQualityController {
         //return "Hits: " + service_air.getHit() + "<br>Miss: " + service_air.getMiss();
     }
 
-
+    /**
+     * Verifica se existe uma estação numa determinada cidade
+     * Se existir retorna a cidade e o ID, incrementando os hits
+     * Se não existir retorna "Station not found" , incrementando o valor de Miss
+     */
     @GetMapping("/station/{city}")
     public String SpecificStation(@PathVariable String city){
         Map<Integer,Station> aux = service_station.returnStation();
