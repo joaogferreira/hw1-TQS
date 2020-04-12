@@ -10,7 +10,11 @@ import org.openqa.selenium.support.ui.Select;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SeleniumTest {
-    //Functional test on the web interface - Selenium WebDriver
+    /**
+     * Teste funcionais à interface web - Tecnologia utilizada: Selenium WebDriver
+     * Testes realizados no Firefox
+     */
+
     private WebDriver driver;
     private String baseUrl;
     private boolean acceptNextAlert = true;
@@ -33,8 +37,13 @@ public class SeleniumTest {
         }
     }
 
+    /**
+     *  testPossibleCities - Verifica se é possível consultar os dados para todas as cidades
+     *  (escolhendo cada cidade disponível e carregando no botão ok ao lado direito)
+     * @throws Exception
+     */
     @Test
-    public void test() throws Exception {
+    public void testPossibleCities() throws Exception {
         driver.get("http://localhost:8080");
         ArrayList<String> city_names = new ArrayList<>();
         city_names.add("Shanghai");city_names.add("Paris");city_names.add("London");city_names.add("Lisbon");
@@ -47,6 +56,9 @@ public class SeleniumTest {
         }
     }
 
+    /**
+     * isElementPresent - Verifica se um determinado elemento está presente
+     */
     private boolean isElementPresent(By by) {
         driver.get("http://localhost:8080");
         try {
@@ -57,6 +69,11 @@ public class SeleniumTest {
         }
     }
 
+    /**
+     * testElementPresence - este método utiliza o método definido anteriormente e verifica se cada elemento previamente
+     * definido no html está presente
+     * Basta um dos elementos não estar presente para o teste falhar
+     */
     @Test
     public void testElementPresence() {
         int count_false = 0;
