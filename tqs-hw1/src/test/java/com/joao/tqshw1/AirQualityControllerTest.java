@@ -15,7 +15,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class AirQualityControllerTest {
-    //Integração - MockMvc
+    /**
+     * Testes de Integração - Tecnologia utilizada: MockMvc
+     */
+
     ArrayList<String> cities_available = new ArrayList<>();
 
     @Autowired
@@ -29,13 +32,19 @@ public class AirQualityControllerTest {
         //this.mockMvc = standaloneSetup(this.controller).build();
     }
 
+    /**
+     * testGetAirQuality - Testa todas as cidades disponíveis e o valor de AirQuality associado
+     * Espera um Status "ok" para cada station
+     * URL : localhost:8080/api/air/{city}
+     */
     @Test
-    public void testAir() throws Exception {
+    public void testGetAirQuality() throws Exception {
         //Add all the cities available
         cities_available.add("shanghai");cities_available.add("paris");cities_available.add("london");
         cities_available.add("lisbon");cities_available.add("berlin");cities_available.add("tokyo");
         cities_available.add("munchen");cities_available.add("denver");cities_available.add("helsinki");
         cities_available.add("stockholm");cities_available.add("moscow");cities_available.add("madrid");
+
 
         for (int i=0;i<cities_available.size();i++){
             mockMvc.perform(MockMvcRequestBuilders.get("/api/air/"+cities_available.get(i)))
@@ -44,8 +53,11 @@ public class AirQualityControllerTest {
         }
     }
 
+    /**
+     * testGetStations - Verifica se todas as stations estão registadas
+     */
     @Test
-    public void testStations() throws Exception {
+    public void testGetStations() throws Exception {
 
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/stations"))
                 .andExpect(status().isOk())
@@ -58,8 +70,12 @@ public class AirQualityControllerTest {
         }
     }
 
+    /**
+     * testGetStats - Retorna todas as estatisticas e verifica se o valor associado é numério (isNumeric)
+     * e se a string associada ("hit" e "miss") não está vazia e que não corresponde a null
+     */
     @Test
-    public void testStats() throws Exception {
+    public void testGetStats() throws Exception {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/api/stats"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -81,8 +97,11 @@ public class AirQualityControllerTest {
         assertThat(!split3[0].equals(null)).isEqualTo(true);
     }
 
+    /**
+     * testGetSpecificStation - verifica se existe uma station para as cidades disponíveis
+     */
     @Test
-    public void testSpecificStation() throws Exception {
+    public void testGetSpecificStation() throws Exception {
         String result,city;
         String[] split;
 
@@ -102,6 +121,10 @@ public class AirQualityControllerTest {
         }
     }
 
+    /**
+     * testSpecificStatinonWrongCity - Verifica que não é encontrada nenhuma station para uma cidade não definida
+     * @throws Exception
+     */
     @Test
     public void testSpecificStationWrongCity() throws Exception{
         String result,city;

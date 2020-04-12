@@ -1,8 +1,11 @@
 package com.joao.tqshw1;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -34,7 +37,7 @@ public class AirQualityController {
      * é incrementado o número de sucessos e retornado o objecto AirQuality de uma determinada cidade
      */
     @GetMapping("/air/{city}")
-    public AirQuality air(@PathVariable String city){
+    public AirQuality getAirQuality(@PathVariable String city){
         if(!service_air.returnAirQuality().containsKey(city)){
             this.refresh_city(city);
             service_air.incrementMiss();
@@ -61,7 +64,7 @@ public class AirQualityController {
      * Método para retornar todas as stations guardadas em cache
      */
     @GetMapping("/stations")
-    public Map<Integer,Station> stations(){
+    public Map<Integer,Station> getStations(){
         return service_station.returnStation();
     }
 
@@ -80,7 +83,7 @@ public class AirQualityController {
      * Se não existir retorna "Station not found" , incrementando o valor de Miss
      */
     @GetMapping("/station/{city}")
-    public String SpecificStation(@PathVariable String city){
+    public String getSpecificStation(@PathVariable String city){
         Map<Integer,Station> aux = service_station.returnStation();
 
         //As stations não têm TTL pelo que apenas poderá ser avaliado se o valor esperado está em cache ou não
