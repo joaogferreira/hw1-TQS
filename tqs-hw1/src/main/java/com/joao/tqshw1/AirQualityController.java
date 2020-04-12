@@ -68,6 +68,10 @@ public class AirQualityController {
         return service_station.returnStation();
     }
 
+    @GetMapping("/requests")
+    public String getRequests(){ return "Requests: " + Cache.countRequests(); } //Retorna TODOS os requests (hits,miss, e acesso a endpoints)
+    //O html também acede à API produzida por mim, pelo que também irá incrementar o número de requests
+    
     /**
      * Método para retornar as estatisticas guardadas em cache
      */
