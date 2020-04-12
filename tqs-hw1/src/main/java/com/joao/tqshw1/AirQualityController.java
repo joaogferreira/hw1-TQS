@@ -9,17 +9,30 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class AirQualityController {
+    /**
+     * Esta classe funciona como Controller
+     * É aqui que são definidos os endpoints
+     */
+    @Autowired
+    private AirQualityService service_air;
 
     @Autowired
-    private AirQualityService service_air; // = new AirQualityService();
-
-    @Autowired
-    private StationService service_station; // = new StationService();
+    private StationService service_station;
 
     @Autowired
     private RestTemplate restTemplate;
+
+    //API Key
     private String token = "366f681a7e36acc422397bb0c8f572d2e106ee04";
 
+    /** Dada uma cidade é retornado o objecto AirQuality associado com os valores registados
+     * Verifica se o valor já se encontra em Cache. No caso de não se encontrar é feito um pedido à API (refresh_city)
+     * Verifica se o valor que se encontra em cache é válido (não foi registado há mais de mais minutos)
+     * Se o valor já tiver sido registado há mais de 10 minutos é feita uma chamada à API (refresh_city)
+     * Nos dois casos acima é incrementado o número de tentativas sem sucesso (miss)
+     * Para o último caso possível,
+     * é incrementado o número de sucessos e retornado o objecto AirQuality de uma determinada cidade
+     */
     @GetMapping("/air/{city}")
     public AirQuality air(@PathVariable String city){
         if(!service_air.returnAirQuality().containsKey(city)){
@@ -36,20 +49,31 @@ public class AirQualityController {
         return service_air.returnAirQuality().get(city);
     }
 
+    /**
+     * Método para fazer chamadas à API para uma determinada cidade
+     */
     private void refresh_city(String city){
         AirQuality air_quality = restTemplate.getForObject("https://api.waqi.info/feed/"+city+"/?token="+token,AirQuality.class);
         service_air.saveAirQuality(city,air_quality);
     }
 
-
+    /**
+     * Método para retornar todas as stations guardadas em cache
+     */
     @GetMapping("/stations")
     public Map<Integer,Station> stations(){
         return service_station.returnStation();
     }
 
-
+    /**
+     * Método para retornar as estatisticas guardadas em cache
+     */
     @GetMapping("/stats")
-    public String getStats() {return "Hits: " + Cache.getHit() + "<br>Miss: " + Cache.getMiss();}
+    public String getStats() {
+        return "Hits: " + service_station.getHit() + "<br>Miss: " + service_station.getMiss();
+        //return "Hits: " + service_air.getHit() + "<br>Miss: " + service_air.getMiss();
+    }
+
 
     @GetMapping("/station/{city}")
     public String SpecificStation(@PathVariable String city){

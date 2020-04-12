@@ -7,11 +7,13 @@ public class Info {
     private int aqi;
     private HashMap<String,HashMap<String,Float>> iaqi;
 
+    //Contrutor
     public Info(int aqi,HashMap<String,HashMap<String,Float>> iaqi){
         this.aqi = aqi;
         this.iaqi = iaqi;
     }
 
+    //Air Quality Index Methods
     public int getAqi() {
         return aqi;
     }
@@ -20,6 +22,7 @@ public class Info {
         this.aqi = aqi;
     }
 
+    //IAQI Methods
     public HashMap<String, HashMap<String, Float>> getIaqi() {
         return iaqi;
     }
@@ -28,6 +31,7 @@ public class Info {
         this.iaqi = iaqi;
     }
 
+    //toString
     @Override
     public String toString() { return "Info{" + "aqi=" + aqi + ", iaqi=" + iaqi + '}'; }
 }
