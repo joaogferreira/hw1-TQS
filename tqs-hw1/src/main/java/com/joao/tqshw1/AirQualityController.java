@@ -1,11 +1,8 @@
 package com.joao.tqshw1;
 
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -52,13 +49,16 @@ public class AirQualityController {
         return service_air.returnAirQuality().get(city);
     }
 
+
     /**
      * Método para fazer chamadas à API para uma determinada cidade
      */
-    private void refresh_city(String city){
+    private void refresh_city(String city){ //Guardar na cache pelo que não é contabilizado como sendo um request
         AirQuality air_quality = restTemplate.getForObject("https://api.waqi.info/feed/"+city+"/?token="+token,AirQuality.class);
         service_air.saveAirQuality(city,air_quality);
     }
+
+
 
     /**
      * Método para retornar todas as stations guardadas em cache
@@ -68,10 +68,14 @@ public class AirQualityController {
         return service_station.returnStation();
     }
 
+
+
     @GetMapping("/requests")
     public String getRequests(){ return "Requests: " + Cache.countRequests(); } //Retorna TODOS os requests (hits,miss, e acesso a endpoints)
     //O html também acede à API produzida por mim, pelo que também irá incrementar o número de requests
-    
+
+
+
     /**
      * Método para retornar as estatisticas guardadas em cache
      */
@@ -80,6 +84,8 @@ public class AirQualityController {
         return "Hits: " + service_station.getHit() + "<br>Miss: " + service_station.getMiss();
         //return "Hits: " + service_air.getHit() + "<br>Miss: " + service_air.getMiss();
     }
+
+
 
     /**
      * Verifica se existe uma estação numa determinada cidade
