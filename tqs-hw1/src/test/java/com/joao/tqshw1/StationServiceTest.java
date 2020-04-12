@@ -12,7 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class StationServiceTest {
-    //Service Level tests
+    /**
+     * Service Level Tests - Tecnologia utilizada: Mockito
+     * Testa as interações com a cache feitas pelo StationService
+     */
 
     @Mock (lenient = true)
     private Cache cache;
@@ -20,6 +23,11 @@ public class StationServiceTest {
     @InjectMocks
     private StationService stationService;
 
+    /**
+     * setup - Adiciona uma cidade com ID 1 à cache
+     * Define as interações com o mockito
+     * @throws Exception
+     */
     @BeforeEach
     public void setup() throws Exception {
         Station st = new Station(1, "Barcelona");
@@ -27,6 +35,10 @@ public class StationServiceTest {
         Mockito.when(cache.getStationByID(4200)).thenReturn(null);//Wrong ID
     }
 
+    /**
+     * whenGetStationByID_thenReturnStation
+     * Verifica se o objecto devolvido corresponde ao objecto que foi guardado no setup()
+     */
     @Test
     public void whenGetStationByID_thenReturnStation(){
         int id = 1;
@@ -36,6 +48,10 @@ public class StationServiceTest {
         assertThat(found.getCity()).isEqualTo("Barcelona");
     }
 
+    /**
+     * whenGetStationByWrongID_thenReturnNull
+     * Verifica se, no caso de ser requisitada uma station com um ID incorrecto, o objecto retornado corresponde a null
+     */
     @Test
     public void whenGetStationByWrongID_thenReturnNull(){
         int id = 4200;
@@ -43,6 +59,10 @@ public class StationServiceTest {
         assertThat(not_found).isNull();
     }
 
+    /**
+     * whenValidStation_thenDetailsAreCorrect
+     * Verifica se, no caso de devolver uma station, os seus atributos estão correctos
+     */
     @Test
     public void whenValidStation_thenDetailsAreCorrect() {
         int id = 1;

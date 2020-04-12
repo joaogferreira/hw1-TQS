@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 public class AirQualityServiceTest {
     /**
-     * Service Level Tests - Tecnologia utilizada: MockITO
+     * Service Level Tests - Tecnologia utilizada: Mockito
      * Testas as interações com a cache feitas pelo AirQualityService
      */
     @Mock (lenient = true)
