@@ -17,7 +17,7 @@ public class TqsHw1Application {
 
     //Run the App
     public static void main(String[] args) {
-        SpringApplication.run(TqsHw1Application.class, args);
+        SpringApplication.run(TqsHw1Application.class);
     }
 
     @Bean
