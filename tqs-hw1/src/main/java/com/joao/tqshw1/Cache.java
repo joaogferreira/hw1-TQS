@@ -57,7 +57,7 @@ public class Cache {
      */
     public boolean isValid(String city){
         if(airQuality.get(city)!=null){
-            long time = airQuality.get(city).getTime();;
+            long time = airQuality.get(city).getTime();
             return System.currentTimeMillis() - time < 600000;
         }
         return false;
