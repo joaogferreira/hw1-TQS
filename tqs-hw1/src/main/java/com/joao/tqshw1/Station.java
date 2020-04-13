@@ -9,7 +9,7 @@ public class Station {
 
     //City Methods
     public String getCity(){ return city; }
-    public void setCity(String new_city) { this.city = new_city; }
+    public void setCity(String newCity) { this.city = newCity; }
 
     //ID Methods
     public int getID() { return id; }

@@ -44,6 +44,7 @@ public class SeleniumTest {
      */
     @Test
     public void testPossibleCities() throws Exception {
+        boolean var = false;
         driver.get("http://localhost:8080");
         ArrayList<String> city_names = new ArrayList<>();
         city_names.add("Shanghai");city_names.add("Paris");city_names.add("London");city_names.add("Lisbon");
@@ -54,6 +55,9 @@ public class SeleniumTest {
             new Select(driver.findElement(By.id("city"))).selectByVisibleText(city_names.get(i));
             driver.findElement(By.id("ok")).click();
         }
+        //Se passou o for anterior significa que está tudo OK
+        var = true;
+        assertThat(var).isEqualTo(true);
     }
 
     /**

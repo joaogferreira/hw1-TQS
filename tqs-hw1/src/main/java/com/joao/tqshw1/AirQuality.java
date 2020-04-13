@@ -4,7 +4,6 @@ public class AirQuality {
     private String status;
     private Info data;
     private long time;
-    private String error;
 
     //Construtor
     public AirQuality(String status,Info data,long time){

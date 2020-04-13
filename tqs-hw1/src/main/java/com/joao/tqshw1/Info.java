@@ -7,7 +7,7 @@ public class Info {
     private int aqi;
     private HashMap<String,HashMap<String,Float>> iaqi;
 
-    //Contrutor
+    //Contsrutor
     public Info(int aqi,HashMap<String,HashMap<String,Float>> iaqi){
         this.aqi = aqi;
         this.iaqi = iaqi;

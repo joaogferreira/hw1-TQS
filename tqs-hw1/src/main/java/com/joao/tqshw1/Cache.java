@@ -2,12 +2,13 @@ package com.joao.tqshw1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Cache {
     protected static final Map<String,AirQuality> airQuality = new HashMap<>();
     protected static final Map<Integer,Station> stations = new HashMap<>();
-    private static int number_Requests = 0;
+    private static int requests = 0;
     private static int miss = 0;
     private static int hit = 0;
 
@@ -20,7 +21,7 @@ public class Cache {
         airQuality.put(city, airq);
     }
     public static Map<String,AirQuality> getAirQuality(){
-        number_Requests++;
+        requests++;
         return airQuality;
     }
 
@@ -31,12 +32,12 @@ public class Cache {
     public static void setStation (int id,Station station) { stations.put(id,station); }
 
     public static Map<Integer,Station> getStations() {
-        number_Requests++;
+        requests++;
         return stations;
     }
 
     //countRequests - Retorna o número de request
-    public static int countRequests(){ return number_Requests; }
+    public static int countRequests(){ return requests; }
 
     //getMiss - retorna o número de tentativas SEM sucesso
     public static int getMiss() { return miss; }
@@ -56,11 +57,8 @@ public class Cache {
      */
     public boolean isValid(String city){
         if(airQuality.get(city)!=null){
-            long time = airQuality.get(city).getTime();
-            if(System.currentTimeMillis() - time >= 600000) {
-                return false;
-            }
-            return true;
+            long time = airQuality.get(city).getTime();;
+            return System.currentTimeMillis() - time < 600000;
         }
         return false;
     }
@@ -68,7 +66,7 @@ public class Cache {
     /**
      * getCitiesAvailable - Retorna todas as cidades disponíveis
      */
-    public ArrayList<String> getCitiesAvailable(){
+    public List<String> getCitiesAvailable(){
         ArrayList<String> aux = new ArrayList<>();
         Integer[] ids = stations.keySet().toArray(new Integer[0]);
 

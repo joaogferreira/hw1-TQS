@@ -14,10 +14,10 @@ public class AirQualityController {
      * É aqui que são definidos os endpoints
      */
     @Autowired
-    private AirQualityService service_air;
+    private AirQualityService serviceAir;
 
     @Autowired
-    private StationService service_station;
+    private StationService serviceStation;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -26,36 +26,37 @@ public class AirQualityController {
     private String token = "366f681a7e36acc422397bb0c8f572d2e106ee04";
 
     /** Dada uma cidade é retornado o objecto AirQuality associado com os valores registados
-     * Verifica se o valor já se encontra em Cache. No caso de não se encontrar é feito um pedido à API (refresh_city)
+     * Verifica se o valor já se encontra em Cache. No caso de não se encontrar é feito um pedido à API (refreshCity)
      * Verifica se o valor que se encontra em cache é válido (não foi registado há mais de mais minutos)
-     * Se o valor já tiver sido registado há mais de 10 minutos é feita uma chamada à API (refresh_city)
+     * Se o valor já tiver sido registado há mais de 10 minutos é feita uma chamada à API (refreshCity)
      * Nos dois casos acima é incrementado o número de tentativas sem sucesso (miss)
      * Para o último caso possível,
      * é incrementado o número de sucessos e retornado o objecto AirQuality de uma determinada cidade
      */
     @GetMapping("/air/{city}")
     public AirQuality getAirQuality(@PathVariable String city){
-        if(!service_air.returnAirQuality().containsKey(city)){
-            this.refresh_city(city);
-            service_air.incrementMiss();
+        if(!serviceAir.returnAirQuality().containsKey(city) || System.currentTimeMillis() - serviceAir.returnAirQuality().get(city).getTime() > 600000){
+            this.refreshCity(city);
+            serviceAir.incrementMiss();
         }
-        else if(System.currentTimeMillis() - service_air.returnAirQuality().get(city).getTime() > 600000) { //10 minutos = 60*10*1000 ms
-            this.refresh_city(city);
-            service_air.incrementMiss();
-        } else {
-            service_air.incrementHit();
+        /**else if(System.currentTimeMillis() - serviceAir.returnAirQuality().get(city).getTime() > 600000) { //10 minutos = 60*10*1000 ms
+            this.refreshCity(city);
+            serviceAir.incrementMiss();
+        }*/
+        else {
+            serviceAir.incrementHit();
         }
 
-        return service_air.returnAirQuality().get(city);
+        return serviceAir.returnAirQuality().get(city);
     }
 
 
     /**
      * Método para fazer chamadas à API para uma determinada cidade
      */
-    private void refresh_city(String city){ //Guardar na cache pelo que não é contabilizado como sendo um request
-        AirQuality air_quality = restTemplate.getForObject("https://api.waqi.info/feed/"+city+"/?token="+token,AirQuality.class);
-        service_air.saveAirQuality(city,air_quality);
+    private void refreshCity(String city){ //Guardar na cache pelo que não é contabilizado como sendo um request
+        AirQuality airQuality = restTemplate.getForObject("https://api.waqi.info/feed/"+city+"/?token="+token,AirQuality.class);
+        serviceAir.saveAirQuality(city,airQuality);
     }
 
 
@@ -65,7 +66,7 @@ public class AirQualityController {
      */
     @GetMapping("/stations")
     public Map<Integer,Station> getStations(){
-        return service_station.returnStation();
+        return serviceStation.returnStation();
     }
 
 
@@ -81,8 +82,7 @@ public class AirQualityController {
      */
     @GetMapping("/stats")
     public String getStats() {
-        return "Hits: " + service_station.getHit() + "<br>Miss: " + service_station.getMiss();
-        //return "Hits: " + service_air.getHit() + "<br>Miss: " + service_air.getMiss();
+        return "Hits: " + serviceStation.getHit() + "<br>Miss: " + serviceStation.getMiss();
     }
 
 
@@ -94,19 +94,17 @@ public class AirQualityController {
      */
     @GetMapping("/station/{city}")
     public String getSpecificStation(@PathVariable String city){
-        Map<Integer,Station> aux = service_station.returnStation();
+        Map<Integer,Station> aux = serviceStation.returnStation();
 
         //As stations não têm TTL pelo que apenas poderá ser avaliado se o valor esperado está em cache ou não
         for(int i=0;i<aux.size();i++){
-            if (aux.get(i)!=null) {
-                if (aux.get(i).getCity().toLowerCase().equals(city.toLowerCase())) {
-                    service_station.incrementHit();
-                    return "There is a station in " + city.substring(0, 1).toUpperCase() + city.substring(1)
-                            + "!<br>City: " + aux.get(i).getCity() + "<br>ID: " + Integer.toString(aux.get(i).getID());
-                }
+            if (aux.get(i)!=null && aux.get(i).getCity().equalsIgnoreCase(city.toLowerCase()) ){
+                serviceStation.incrementHit();
+                return "There is a station in " + city.substring(0, 1).toUpperCase() + city.substring(1)
+                        + "!<br>City: " + aux.get(i).getCity() + "<br>ID: " + Integer.toString(aux.get(i).getID());
             }
         }
-        service_station.incrementMiss();
+        serviceStation.incrementMiss();
         return "Station not found.";
     }
 

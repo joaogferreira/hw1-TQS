@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CacheUnitTest {
@@ -249,7 +247,7 @@ public class CacheUnitTest {
 
         AirQuality airQualityReceived = cache.getAirQualityByCity("Portalegre");
         assertThat(airQualityReceived.getTime()>=time).isEqualTo(true); //o tempo de registo pode ser ligeiramente superior
-        assertThat(airQualityReceived.getStatus().equals("ok"));
-        assertThat(airQualityReceived.getData().equals(info));
+        assertThat(airQualityReceived.getStatus().equals("ok")).isEqualTo(true);
+        assertThat(airQualityReceived.getData().equals(info)).isEqualTo(true);
     }
 }
