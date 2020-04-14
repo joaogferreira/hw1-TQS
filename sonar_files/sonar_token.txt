@@ -1,6 +1,0 @@
-15a23ee54b7824e713d82389b54df3b8cbb1d2d4
-
-mvn sonar:sonar \
-  -Dsonar.projectKey=com.joao:tqs-hw1 \
-  -Dsonar.host.url=http://localhost:9000 \
-  -Dsonar.login=15a23ee54b7824e713d82389b54df3b8cbb1d2d4
